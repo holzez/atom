@@ -123,4 +123,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 #
-MEDIA_ROOT = '/home/sergey/media/'
+MEDIA_ROOT = '/home/sergey/atom.mail/media'
+
+AUTH_USER_MODEL = 'posts.User'
+
+try:
+    from sharesound.local_settings import *
+except ImportError:
+    pass
