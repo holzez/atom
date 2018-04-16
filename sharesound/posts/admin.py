@@ -10,7 +10,7 @@ class GenreRelsAdmin(admin.ModelAdmin):
     raw_id_fields = ('genre', 'track',)
 
 class TrackAdmin(admin.ModelAdmin):
-	raw_id_fields = ('created_by',)
+	raw_id_fields = ('created_by', 'album')
 
 class CommentAdmin(admin.ModelAdmin):
 	raw_id_fields = ('created_by',)
@@ -29,6 +29,9 @@ class TagAdmin(admin.ModelAdmin):
 
 class LikeAdmin(admin.ModelAdmin):
 	raw_id_fields = ('created_by',)
+	
+class AlbumAdmin(admin.ModelAdmin):
+    raw_id_fields = ('created_by',)
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Track, TrackAdmin)
@@ -39,3 +42,4 @@ admin.site.register(Tag, TagAdmin)
 admin.site.register(Like, LikeAdmin)
 admin.site.register(GenreRelationship, GenreRelsAdmin)
 admin.site.register(TagRelationship, TagRelsAdmin)
+admin.site.register(Album, AlbumAdmin)

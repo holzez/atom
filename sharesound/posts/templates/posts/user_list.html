@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Список пользователей{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <form class="container-fluid" method='get'>
+            <h2>Фильтрация:</h2>
+            <hr>
+            <div class="row">
+                <div class="col-12 col-md-6 form-group">
+                    <label for='username_search'>Username:</label>
+                    <input class="form-control" id='username_search' name='username' value="{{ search_dict.username }}" type='text' />
+                </div>
+                <div class="col-12 col-md-6 form-group">     
+                    <label for="name_search">Имя:</label>
+                    <input class="form-control" id='name_search' name='name' value="{{ search_dict.name }}" type='text' />
+                </div>
+            </div>
+            <input class="btn btn-primary" type='submit' value='Поиск'/>
+        </form>
+    </div>
+    <ul class="list-group list-group-flush">
+        {% for user in user_list %}
+            <li class="list-group-item">
+                <img class="rounded-circle mr-3" width='50' height='50' src="{% if user.photo %}
+                                                                            {{ user.photo.url }}
+                                                                        {% else %}
+                                                                            {% static 'img/empty_cover.png' %}
+                                                                        {% endif %}" />
+                <span class="h5"><a href="{% url 'user_detail' user.username %}">
+                    {{ user.username }}
+                </a></span>
+                <span class="text-muted"> - {{ user.get_full_name }}:</span>
+                <span class="mx-5 lead">{{ user.bio|truncatewords:5 }}</span>
+                <div class="float-right allign-self-center">
+                    <span title="Количество подписчиков"><span class="oi oi-person mx-2"></span>{{ user.subs.count }}</span>
+                    <span title="Количество треков"><span class="oi oi-audio-spectrum mr-2 ml-4"></span>{{ user.track_set.count }}</span>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

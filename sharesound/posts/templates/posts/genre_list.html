@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <ul class="list-group list-group-flush">
+        {% for genre in genre_list %}
+            <li class="list-group-item list-group-item-action text-center" onClick='location.href="{% url 'genre_post_list' genre.id %}"'>
+                <a href="{% url 'genre_post_list' genre.id %}">{{ genre.name }}</a>
+                <div class="">
+                    <span title="Количество подписчиков"><span class="oi oi-person mx-2"></span>{{ genre.subs.count }}</span>
+                    <span title="Количество треков"><span class="oi oi-audio-spectrum mr-2 ml-4"></span>{{ genre.track_set.count }}</span>
+                    <span title="Количество лайков"><span class="oi oi-heart mr-2 ml-4 my-3"></span>{{  genre.likes.count }}</span>                
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

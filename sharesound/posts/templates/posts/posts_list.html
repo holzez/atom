@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <form class="container-fluid" method='get'>
+            <h2>Фильтрация:</h2>
+            <hr>
+            <div class="row">
+                <div class="col-12 col-md-4 form-group">
+                    <label for="title_search">Название:</label>
+                    <input class="form-control" id='title_search' name='title' value="{{ search_dict.title }}" type='text' />
+                </div>
+                <div class="col-12 col-md-4 form-group">     
+                    <label for="author_search">Исполнитель:</label>
+                    <input class="form-control" id='author_search' name='author' value="{{ search_dict.author }}" type='text' />
+                </div>
+                <div class="col-12 col-md-4 form-group">
+                    <label for="album_search">Альбом:</label>
+                    <input class="form-control" id='album_search' name='album' value="{{ search_dict.album }}" type='text' />
+                </div>
+            </div>
+            <input class="btn btn-primary" type='submit' value='Поиск'/>
+        </form>
+    </div>
+    <table class="table table-hover table-responsive-md">
+        <caption>{{ title }}</caption>
+        <thead>
+            <tr>
+                <th scope="col">Название</th>
+                <th scope="col">Автор</th>
+                <th scope="col">Альбом</th>
+                <th scope="col">Показатели</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in posts_list %}
+                <tr class="table-link" onClick='location.href="{% url 'post_detail' post.id %}"'>
+                    <th scope="row">{{ post.title }}</th>
+                    <td>{{ post.created_by.username }}</td>
+                    <td>
+                        {% if post.album.title is not None %}
+                            {{ post.album.title }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td>
+                        <span class="oi oi-heart mx-2 my-3" title="Likes" aria-hidden="true"></span>
+                        {{ post.likes.count }}
+                        <span class="oi oi-comment-square ml-4 mr-2" title="Comments"></span>
+                        {{ post.comments.count }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ post.created_by.username }} - {{ post.title }} {% endblock %}
+
+{% block content %}
+    
+    <h1 class="display-4">{{ post.title }}</h1>
+    <hr class="mb-1">
+    <div class="float-right text-muted">{{ post.created_at }}</div>   
+    <div class="float-left">
+        {% for tagrel in post.tags.select_related %}              
+            <span class="badge badge-secondary">{{ tagrel.tag.name }}</span>
+        {% empty %}
+            <span class="badge badge-secondary">Нет тегов</span>
+        {% endfor %}  
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-12 col-md-6 col-xl-6 text-center">
+            <img class="img-fluid img-thumbnail align-self-center"   src={% if post.picture %}
+                                                                "{{ post.picture.url }}"
+                                                            {% else %}
+                                                                "{% static 'img/empty_cover.png' %}"
+                                                            {% endif %} />
+        </div>
+        <div class="col-12 col-md-6 col-xl-6">
+            <div class="my-5 bg-light text-center">
+                <audio controls src="{{ post.source.url }}"></audio>
+            </div>
+            <div>
+                <h5>
+                    <span class="text-muted">Исполнитель:</span> 
+                    <a href="{% url 'user_detail' post.created_by.username %}">
+                        {% if post.created_by.photo %}
+                            <img class="rounded-circle ml-3" width="50" height="50" src="{{ post.created_by.photo.url }}">
+                        {% endif %}
+                        {{ post.created_by.username }}
+                    </a>
+                </h5>
+                {% if post.album is not None %}
+                    <h5>
+                        <span class="text-muted">Альбом:</span>
+                        <a href="">"{{ post.album.title }}"</a>
+                    </h5>
+                {% endif %}
+                <h5>
+                    <span class="text-muted">Жанры:</span>
+                    {% for g in post.genre.select_related %}
+                        <a class="none-decor-hover" href="{% url 'genre_post_list' g.id %}">
+                            <span class="badge badge-info">
+                                {{ g.name }}
+                            </span>
+                        </a>
+                    {% endfor %}
+                </h5>
+                <div>
+                    <span class="oi oi-heart mx-2 my-3" title="Likes" aria-hidden="true"></span>{{  post.likes.count }}
+                    <span class="oi oi-comment-square ml-4 mr-2" title="Comments"></span>{{  post.comments.count }}
+                </div>
+            </div>
+        </div>
+    </div>                                    
+    <p class="lead my-3"> {{ post.desc }} </p>
+    <hr>
+    <h2>Комментарии:</h2>
+    {% for comment in comments %}
+        <div class="card border-info mb-4">
+            <div class="card-header">
+                <a class="none-decor-hover" href="{% url 'user_detail' comment.created_by.username %}">
+                    {{ comment.created_by.username }}
+                </a>
+                <span class="text-muted">оставил комментарий:</span>
+            </div>
+            <div class="card-body text-info">
+                {{ comment.text }}
+                <div class="text-right">
+                    {{ comment.likes.count }}
+                    <span class="oi oi-heart mx-2 my-3" title="Likes" aria-hidden="true"></span>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        Нет комментариев        
+    {% endfor %}
+    
+{% endblock %}

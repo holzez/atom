@@ -1,0 +1,18 @@
+{% if page is not None %}
+    <p>{{ page }} страница из {{ number_of_pages }}</p>
+    <form method="get">
+        {% if page > 1 %}
+            <a href="{{ request.path }}?page={{ page|add:'-1' }}{{ search_url }}">Предыдущая</a>
+        {% endif %}
+        <input name="page" type="text" />
+        
+        {% for search, value in search_dict.items %}
+            <input type='hidden' name="{{ search }}" value="{{ value }}" />
+        {% endfor %}
+        
+        <input type="submit" value="Перейти"/>
+        {% if page < number_of_pages %}
+            <a href="{{ request.path }}?page={{ page|add:'1' }}{{ search_url }}">Следующая</a>
+        {% endif %}
+    </form>
+{% endif %}

@@ -1,1 +1,4 @@
 env/
+sharesound/sharesound/local_settings.py
+sharesound/_makedb.py
+media/

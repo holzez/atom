@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Список альбомов
+{% endblock %}
+
+{% block content %}  
+    <div class="jumbotron">
+        <form class="container-fluid" method='get'>
+            <h2>Фильтрация:</h2>
+            <hr>
+            <div class="row">
+                <div class="col-12 col-md-6 form-group">
+                    <label for="title_search">Название:</label>
+                    <input class="form-control" id='title_search' name='title' value="{{ search_dict.title }}" type='text' />
+                </div>
+                <div class="col-12 col-md-6 form-group">     
+                    <label for="author_search">Автор:</label>
+                    <input class="form-control" id='author_search' name='author' value="{{ search_dict.author }}" type='text' />
+                </div>
+            </div>
+            <input class="btn btn-primary" type='submit' value='Поиск'/>
+        </form>
+    </div>
+    
+    <table class="table table-hover table-resposive-md">
+        <caption>Список альбомов</caption>
+        <thead>
+            <tr>
+                <th scope="col">Название</th>
+                <th scope="col">Автор</th>
+                <th scope="col">Дата релиза</th>
+                <th scope="col">Кол-во треков</th>
+                <th scope="col">Показатели</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for album in album_list %}
+                <tr>
+                    <th scope="row">{{ album.title }}</th>
+                    <td>{{ album.created_by.username }}</td>
+                    <td>{{ album.created_at }}</td>
+                    <td class="text-center">{{ album.track_set.count }}</td>
+                    <td>
+                        <span class="oi oi-heart mx-2 my-3" title="Likes" aria-hidden="true"></span>
+                        {{ album.likes.count }}
+                        <span class="oi oi-comment-square ml-4 mr-2" title="Comments"></span>
+                        {{ album.comments.count }}
+                    </td>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

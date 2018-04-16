@@ -1,0 +1,27 @@
+{% if request.user.is_authenticated %}
+    {{ request.user.username }}
+    <a href="/accounts/logout?next={{ request.get_full_path }}">Выйти</a>
+{% else %}
+    <a href="/accounts/login?next={{ request.get_full_path }}">Войти</a>
+{% endif %}
+<ul>
+    <li>
+        <a href="#">Лента</a>
+    </li>
+    <li>
+        <a href="{% url 'posts_list' %}">Песни</a>
+    </li>
+    <li>
+        <a href="{% url 'album_list' %}">Альбомы</a>
+    </li>
+    <li>
+        <a href="{% url 'genre_list' %}">Жанры</a>
+    </li>
+    <li>
+        <a href="{% url 'user_list' %}">Пользователи</a>
+    </li>
+    <li>
+        <a href="{% url 'tag_list' %}">Теги</a>
+    </li>
+</ul>
+

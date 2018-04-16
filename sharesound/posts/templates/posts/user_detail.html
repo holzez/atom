@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Пользователь '{{ user.username }}'{% endblock %}
+
+{% block content %}
+    <h1 class="display-4">{{ user.username }} - {{ user.get_full_name }}</h1>
+    <hr>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <img class="img-fluid img-thumbnail align-self-center"   src={% if user.photo %}
+                                                                            "{{ user.photo.url }}"
+                                                                        {% else %}
+                                                                            "{% static 'img/empty_cover.png' %}"
+                                                                        {% endif %} />
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card my-5">
+                <div class="card-header">
+                    <h5>Биография:</h5>
+                </div>
+                <div class="card-body">
+                    <p>{{ user.bio }}</p>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col">
+                    <h4>Подписчиков:</h4>
+                    <strong>{{ user.subs.count }}</strong>
+                </div>
+                <div class="col">
+                    <h4>Подписок:</h4>
+                    <strong>{{ user.sub_set.count }}</strong>
+                </div>
+                <div class="col">
+                    <h4>Треков:</h4>
+                    <strong>{{ user.track_set.count }}</strong>
+                </div>
+            </div>
+        </div>
+    </div>  
+        
+{% endblock %}

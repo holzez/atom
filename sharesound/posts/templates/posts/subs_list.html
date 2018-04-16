@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Лента{% endblock %}
+
+{% block nav_sub_posts %}active{% endblock %}
+
+{% block content %}
+    {% for post in posts %}
+        <div>
+            <h3>{{ post.title }}</h3>
+            <h5>
+                {{ post.created_by }}            
+                {{ post.created_at }}
+            </h5>
+        </div>
+    {% endfor %}
+{% endblock %}

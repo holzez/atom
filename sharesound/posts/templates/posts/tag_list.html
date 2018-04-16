@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for tag in tag_list %}
+        <div>
+            <a href="{% url 'tag_post_list' tag.id %}">{{ tag.name }}</a>
+        </div>
+    {% endfor %}
+{% endblock %}

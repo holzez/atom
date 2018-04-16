@@ -1,0 +1,17 @@
+.none-decor-hover:hover {
+    text-decoration: none;
+}
+
+.post-title {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #0B131B;
+}
+
+.post-author {
+    margin-bottom: 10px;
+}
+
+.table-link:hover {
+    cursor: pointer;
+}
