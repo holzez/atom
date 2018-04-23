@@ -15,3 +15,7 @@
 .table-link:hover {
     cursor: pointer;
 }
+
+.card-btn {
+    cursor: pointer;
+}
